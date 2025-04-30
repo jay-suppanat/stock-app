@@ -48,16 +48,12 @@ func LoginStockApp(c *gin.Context) {
 	db, err := db_config.InitDB()
 
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "Failed to connect to database",
-		})
+		c.JSON(http.StatusInternalServerError, gin.H{ "error": "Failed to connect to database" })
 		return
 	}
 
 	if err := c.ShouldBindJSON(&request); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Invalid request body",
-		})
+		c.JSON(http.StatusBadRequest, gin.H{ "error": "Invalid request body" })
 		return
 	}
 
@@ -66,16 +62,12 @@ func LoginStockApp(c *gin.Context) {
 	)
 
 	if err := row.Scan(&query.UserName, &query.Password, &query.FirstName, &query.LastName); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "Failed to scan user data",
-		})
+		c.JSON(http.StatusInternalServerError, gin.H{ "error": "Failed to scan user data" })
 		return
 	}
 
 	if request.UserName != query.UserName || request.Password != query.Password {
-		c.JSON(http.StatusUnauthorized, gin.H{
-			"error": "Username or Password is incorrect.",
-		})
+		c.JSON(http.StatusUnauthorized, gin.H{ "error": "Username or Password is incorrect." })
 		return
 	}
 
