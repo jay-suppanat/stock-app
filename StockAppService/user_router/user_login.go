@@ -4,27 +4,49 @@ import (
 	"github.com/gin-gonic/gin"
 	"stock-app-service/config"
 	"net/http"
+	"crypto/rand"
+	"encoding/hex"
 )
 
+// MARK: UserLoginResponse
+
+type UserLoginResponse struct {
+	TokenType string `json:"token_type"`
+	Token     string `json:"access_token"`
+	UserName  string `json:"username"`
+	UserInfo  UserInfo `json:"user_info"`
+}
+
 type UserInfo struct {
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+}
+
+// MARK: UserLoginQuery
+
+type UserLoginQuery struct {
 	UserName  string `json:"username"`
 	Password  string `json:"password"`
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
 }
 
-type UserInfoBody struct {
+// MARK: UserLoginBody
+
+type UserLoginBody struct {
 	UserName  string `json:"username"`
 	Password  string `json:"password"`
 }
 
+// MARK: Service
+
 func LoginStockApp(c *gin.Context) {
-	var response UserInfo
-	var request UserInfoBody
+	var response UserLoginResponse
+	var query UserLoginQuery
+	var request UserLoginBody
 
 	db, err := db_config.InitDB()
 
-	// Check DB connection
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": "Failed to connect to database",
@@ -32,7 +54,6 @@ func LoginStockApp(c *gin.Context) {
 		return
 	}
 
-	// Check service request body
 	if err := c.ShouldBindJSON(&request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "Invalid request body",
@@ -40,26 +61,46 @@ func LoginStockApp(c *gin.Context) {
 		return
 	}
 
-	// Query data from DB
 	row := db.QueryRow(
 		"SELECT username, password, firstname, lastname FROM `user-info` LIMIT 1",
 	)
 
-	// Set data from DB to struct UserInfo
-	if err := row.Scan(&response.UserName, &response.Password, &response.FirstName, &response.LastName); err != nil {
+	if err := row.Scan(&query.UserName, &query.Password, &query.FirstName, &query.LastName); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": "Failed to scan user data",
 		})
 		return
 	}
 
-	if request.UserName != response.UserName || request.Password != response.Password {
+	if request.UserName != query.UserName || request.Password != query.Password {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"error": "Username or Password is incorrect.",
 		})
 		return
 	}
 
+	token, _ := generateRandomToken(100)
+
+	response = UserLoginResponse{
+		TokenType: "Bearer",
+		Token: token,
+		UserName: query.UserName,
+		UserInfo: UserInfo{
+			FirstName: query.FirstName,
+			LastName: query.LastName,
+		},
+	}
+
 
 	c.JSON(http.StatusOK, response)
+}
+
+func generateRandomToken(length int) (string, error) {
+	bytes := make([]byte, length)
+
+	if _, err := rand.Read(bytes); err != nil {
+		return "", err
+	}
+
+	return hex.EncodeToString(bytes), nil
 }
