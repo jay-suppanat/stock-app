@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		655162FD2DC3755000CA7A4F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 655162FC2DC3755000CA7A4F /* Alamofire */; };
+		655163022DC3766400CA7A4F /* PromiseKit in Frameworks */ = {isa = PBXBuildFile; productRef = 655163012DC3766400CA7A4F /* PromiseKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				655162FD2DC3755000CA7A4F /* Alamofire in Frameworks */,
+				655163022DC3766400CA7A4F /* PromiseKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +86,7 @@
 			name = StockApp;
 			packageProductDependencies = (
 				655162FC2DC3755000CA7A4F /* Alamofire */,
+				655163012DC3766400CA7A4F /* PromiseKit */,
 			);
 			productName = StockApp;
 			productReference = 65ABECC32DC1352400DCBE56 /* StockApp.app */;
@@ -115,6 +118,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				655162FB2DC3755000CA7A4F /* XCRemoteSwiftPackageReference "Alamofire" */,
+				655163002DC3766400CA7A4F /* XCRemoteSwiftPackageReference "PromiseKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 65ABECC42DC1352400DCBE56 /* Products */;
@@ -354,6 +358,14 @@
 				minimumVersion = 5.10.2;
 			};
 		};
+		655163002DC3766400CA7A4F /* XCRemoteSwiftPackageReference "PromiseKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mxcl/PromiseKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -361,6 +373,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 655162FB2DC3755000CA7A4F /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		655163012DC3766400CA7A4F /* PromiseKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 655163002DC3766400CA7A4F /* XCRemoteSwiftPackageReference "PromiseKit" */;
+			productName = PromiseKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
