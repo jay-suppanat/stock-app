@@ -7,7 +7,6 @@ import (
 	"strconv"
 	"strings"
 	"github.com/gin-gonic/gin"
-	"fmt"
 )
 
 type GetUserInfoResponse struct {
