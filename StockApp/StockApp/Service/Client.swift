@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 import PromiseKit
 
-class APIClient {
+class Client {
     static let shared = APIClient()
 
     static func request<T: Codable, R: URLRequestConvertible>(route: R) -> Promise<T> {

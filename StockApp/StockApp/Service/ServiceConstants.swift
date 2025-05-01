@@ -17,7 +17,13 @@ enum ServiceConstants {
     }
 
     enum ParameterKey {
-
+        static let username = "username"
+        static let password = "password"
+        static let confirmPassword = "confirm_password"
+        static let firstName = "first_name"
+        static let lastName = "last_name"
+        static let email = "email"
+        static let phoneNumber = "phone_number"
     }
 
     enum ParameterValue {

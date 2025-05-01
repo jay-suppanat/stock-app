@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: URLRequestConvertible
 
-protocol APIRouter: URLRequestConvertible {
+protocol Router: URLRequestConvertible {
     var method: HTTPMethod { get }
     var baseURL: String { get }
     var path: String { get }
@@ -20,7 +20,7 @@ protocol APIRouter: URLRequestConvertible {
 
 // MARK: APIRouter
 
-extension APIRouter {
+extension Router {
     func asURLRequest() throws -> URLRequest {
         let url = try self.composeURL()
         var request = URLRequest(url: url)
