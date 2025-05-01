@@ -28,4 +28,11 @@ const (
 	AuthorizationFail = "Authorization fail"
 	DeleteUserSuccess = "Delete user success"
 	DeleteUserFail = "Delete user fail"
+	NotMatchToken = "Not match token"
+	InternalError = "Internal error"
+)
+
+// MARK: - Value
+const (
+	Bearer = "Bearer "
 )
