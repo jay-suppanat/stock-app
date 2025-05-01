@@ -8,5 +8,6 @@ import (
 func main() {
 	router := gin.Default()
 	router.POST("/login_stock_app", user_router.LoginStockApp)
+	router.POST("/register_user", user_router.RegisterUser)
 	router.Run()
 }
