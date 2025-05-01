@@ -13,6 +13,13 @@ struct LoginResponse: Codable {
     let tokenType, accessToken, username: String
     let userInfo: UserInfo
 
+    init() {
+        self.tokenType = ""
+        self.accessToken = ""
+        self.username = ""
+        self.userInfo = .init()
+    }
+
     enum CodingKeys: String, CodingKey {
         case tokenType = "token_type"
         case accessToken = "access_token"
@@ -25,6 +32,11 @@ struct LoginResponse: Codable {
 
 struct UserInfo: Codable {
     let firstName, lastName: String
+
+    init() {
+        self.firstName = ""
+        self.lastName = ""
+    }
 
     enum CodingKeys: String, CodingKey {
         case firstName = "first_name"
