@@ -104,8 +104,32 @@
                     <view key="view" contentMode="scaleToFill" id="e9U-Pc-Fyn">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="lHA-9H-kmf">
+                                <rect key="frame" x="10" y="406" width="373" height="40"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AZK-m4-BuI">
+                                        <rect key="frame" x="0.0" y="0.0" width="373" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="PlW-3o-kfe"/>
+                                        </constraints>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Go to login"/>
+                                        <connections>
+                                            <action selector="openLoginButton:" destination="9jd-or-DPP" eventType="touchUpInside" id="frJ-bQ-JyO"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="ECe-GI-7TF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="ECe-GI-7TF" firstAttribute="trailing" secondItem="lHA-9H-kmf" secondAttribute="trailing" constant="10" id="OOS-be-Azp"/>
+                            <constraint firstItem="lHA-9H-kmf" firstAttribute="centerY" secondItem="e9U-Pc-Fyn" secondAttribute="centerY" id="ke0-6F-Rc3"/>
+                            <constraint firstItem="lHA-9H-kmf" firstAttribute="leading" secondItem="ECe-GI-7TF" secondAttribute="leading" constant="10" id="rmU-zc-QEU"/>
+                            <constraint firstItem="lHA-9H-kmf" firstAttribute="centerX" secondItem="e9U-Pc-Fyn" secondAttribute="centerX" id="tda-uU-3wo"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Hbh-bs-1Rz"/>
                 </viewController>

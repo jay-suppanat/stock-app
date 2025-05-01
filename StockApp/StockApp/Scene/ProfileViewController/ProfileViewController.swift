@@ -8,5 +8,7 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-    
+    @IBAction func openLoginButton(_ sender: Any) {
+        
+    }
 }
