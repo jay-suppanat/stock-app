@@ -4,7 +4,9 @@ import (
 	"database/sql"
 	"sync"
 	"log"
+	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	"stock-app-service/support_file"
 )
 
 var (
@@ -15,7 +17,7 @@ var (
 
 func InitDB() (*sql.DB, error) {
 	once.Do(func() {
-		connectionString := "root:mercideszz123@tcp(localhost:3306)/sys"
+		connectionString := fmt.Sprintf("root:%s@tcp(localhost:3306)/sys", support_file.DBPassword)   
 		db, err = sql.Open("mysql", connectionString)
 
 		if err != nil {
