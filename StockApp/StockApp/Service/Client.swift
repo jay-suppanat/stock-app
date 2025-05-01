@@ -10,7 +10,7 @@ import Alamofire
 import PromiseKit
 
 class Client {
-    static let shared = APIClient()
+    static let shared = Client()
 
     static func request<T: Codable, R: URLRequestConvertible>(route: R) -> Promise<T> {
         return Promise<T> { seal in

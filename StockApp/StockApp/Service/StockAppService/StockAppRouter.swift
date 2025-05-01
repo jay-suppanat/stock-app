@@ -57,7 +57,9 @@ enum StockAppRouter: Router {
     var header: [String : String] {
         switch self {
         default:
-            return [:]
+            return [
+                ServiceConstants.HeaderKey.contentType: ServiceConstants.HeaderValue.json
+            ]
         }
     }
 }

@@ -10,3 +10,6 @@ protocol Themes {}
 protocol UserInterface {}
 protocol Service {}
 protocol Logic {}
+protocol Action {}
+protocol AlertPresentation {}
+protocol ControllerPresentation {}

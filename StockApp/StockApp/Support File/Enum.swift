@@ -13,3 +13,17 @@ public enum ServiceError: Error {
     case badRequest
     case unknown
 }
+
+// MARK: - SelectedTabBar
+
+public enum SelectedTabBar: Int {
+    case home = 0
+    case search = 1
+    case profile = 2
+}
+
+// MARK: - OpenController
+
+public enum OpenController {
+    case loginVC
+}
