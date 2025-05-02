@@ -16,8 +16,30 @@ extension UIView {
             self.layer.cornerRadius = 10
         case .card:
             self.layer.cornerRadius = 5
+        case .none:
+            self.layer.cornerRadius = 0
         }
 
         self.layer.masksToBounds = true
+    }
+
+    public func showHideWithAnimation(isShow: Bool) {
+        if isShow {
+            self.isHidden = false
+            UIView.animate(withDuration: 0.3) {
+                self.alpha = 1
+            }
+        } else {
+            UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut]) {
+                self.alpha = 0
+            } completion: { _ in
+                self.isHidden = true
+            }
+        }
+    }
+
+    public func setupLineView() {
+        self.backgroundColor = UIColor.gray
+        self.setCornerRadius(cornerRadius: .roundHalf)
     }
 }

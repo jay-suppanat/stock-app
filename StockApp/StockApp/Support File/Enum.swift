@@ -34,4 +34,5 @@ public enum CornerRadius {
     case roundHalf
     case roundDefault
     case card
+    case none
 }

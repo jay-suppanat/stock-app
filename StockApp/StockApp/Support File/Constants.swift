@@ -4,3 +4,12 @@
 //
 //  Created by Suppanat Chinthumrucks on 1/5/2568 BE.
 //
+
+enum Constants {
+    enum Text {
+        static let username = "Username"
+        static let password = "Password"
+        static let signIn = "Sign In"
+        static let signUp = "Sign Up"
+    }
+}

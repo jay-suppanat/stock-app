@@ -63,8 +63,7 @@ extension AppCaller: ControllerPresentation {
         switch menu {
         case .loginVC:
             let vc = LoginViewController()
-            vc.modalPresentationStyle = .fullScreen
-            self.window.getTopViewController()?.present(vc, animated: true)
+            self.window.getTopViewController()?.navigationController?.pushViewController(vc, animated: true)
         }
     }
 }

@@ -13,6 +13,9 @@ class LoginViewController: UIViewController {
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var registerDescLabel: UILabel!
     @IBOutlet var registerButton: UIButton!
+    @IBOutlet var lineView: [UIView]!
+    @IBOutlet var usernameFloatingLabel: UILabel!
+    @IBOutlet var passwordFloatingLabel: UILabel!
 
     private let viewModel: LoginViewModel = .init()
 }
@@ -23,6 +26,39 @@ extension LoginViewController: LifeCycle {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupUI()
+        self.applyThemes()
+    }
+}
+
+// MARK: - Themes
+
+extension LoginViewController: Themes {
+    private func applyThemes() {
+        self.usernameTextField.setupTextField(placeholder: Constants.Text.username,
+                                              textColor: UIColor.white,
+                                              borderStyle: .none,
+                                              cornerRadius: .none,
+                                              contentType: .username)
+        self.passwordTextField.setupTextField(placeholder: Constants.Text.password,
+                                              textColor: UIColor.white,
+                                              borderStyle: .none,
+                                              cornerRadius: .none,
+                                              contentType: .username)
+        self.usernameTextField.delegate = self
+        self.passwordTextField.delegate = self
+        self.usernameFloatingLabel.setupLabel(text: Constants.Text.username,
+                                              textColor: UIColor.white,
+                                              font: UIFont.systemFont(ofSize: 15),
+                                              cornerRadius: .none)
+        self.passwordFloatingLabel.setupLabel(text: Constants.Text.password,
+                                              textColor: UIColor.white,
+                                              font: UIFont.systemFont(ofSize: 15),
+                                              cornerRadius: .none)
+        self.lineView.forEach { view in
+            view.setupLineView()
+        }
+        self.usernameFloatingLabel.isHidden = true
+        self.passwordFloatingLabel.isHidden = true
     }
 }
 
@@ -56,5 +92,33 @@ extension LoginViewController: Service {
 
                     }
                     .store(in: &self.viewModel.cancellables)
+    }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == self.usernameTextField {
+            self.usernameFloatingLabel.showHideWithAnimation(isShow: true)
+        } else if textField == self.passwordTextField {
+            self.passwordFloatingLabel.showHideWithAnimation(isShow: true)
+        }
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == self.usernameTextField {
+            if self.usernameTextField.text?.count ?? 0 > 0 {
+                self.usernameFloatingLabel.showHideWithAnimation(isShow: true)
+            } else {
+                self.usernameFloatingLabel.showHideWithAnimation(isShow: false)
+            }
+        } else if textField == self.passwordTextField {
+            if self.passwordTextField.text?.count ?? 0 > 0 {
+                self.passwordFloatingLabel.showHideWithAnimation(isShow: true)
+            } else {
+                self.passwordFloatingLabel.showHideWithAnimation(isShow: false)
+            }
+        }
     }
 }
