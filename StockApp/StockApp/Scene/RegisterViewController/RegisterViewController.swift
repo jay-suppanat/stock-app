@@ -8,7 +8,16 @@
 import UIKit
 
 class RegisterViewController: UIViewController {
+    private var viewModel: RegisterViewModel
 
+    required init(viewModel: RegisterViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: RegisterViewController.identifier, bundle: Bundle(for: RegisterViewController.self))
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 // MARK: - LifeCycle

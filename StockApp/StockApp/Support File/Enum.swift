@@ -26,6 +26,7 @@ public enum SelectedTabBar: Int {
 
 public enum OpenController {
     case loginVC
+    case registerVC
 }
 
 // MARK: - CornerRadius

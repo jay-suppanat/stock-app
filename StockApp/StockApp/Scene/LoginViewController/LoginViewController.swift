@@ -16,8 +16,18 @@ class LoginViewController: UIViewController {
     @IBOutlet var lineView: [UIView]!
     @IBOutlet var usernameFloatingLabel: UILabel!
     @IBOutlet var passwordFloatingLabel: UILabel!
+    @IBOutlet var loginTitleLabel: UILabel!
 
-    private let viewModel: LoginViewModel = .init()
+    private var viewModel: LoginViewModel
+
+    required init(viewModel: LoginViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: LoginViewController.identifier, bundle: Bundle(for: LoginViewController.self))
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 // MARK: - LifeCycle
@@ -57,8 +67,24 @@ extension LoginViewController: Themes {
         self.lineView.forEach { view in
             view.setupLineView()
         }
-        self.usernameFloatingLabel.isHidden = true
-        self.passwordFloatingLabel.isHidden = true
+        self.usernameFloatingLabel.alpha = 0
+        self.passwordFloatingLabel.alpha = 0
+        self.loginButton.setupButtonTheme(text: Constants.Text.signIn,
+                                          textColor: UIColor.tintColor,
+                                          backgroundColor: UIColor.white,
+                                          cornerRadius: .roundHalf)
+        self.loginTitleLabel.setupLabel(text: Constants.Text.signIn,
+                                        textColor: UIColor.white,
+                                        font: UIFont.systemFont(ofSize: 85),
+                                        cornerRadius: .none)
+        self.registerDescLabel.setupLabel(text: Constants.Text.registerDesc,
+                                          textColor: UIColor.white,
+                                          font: UIFont.systemFont(ofSize: 15),
+                                          cornerRadius: .none)
+        self.registerButton.setupButtonTheme(text: Constants.Text.signUp,
+                                             textColor: UIColor.tintColor,
+                                             backgroundColor: UIColor.clear,
+                                             cornerRadius: .none)
     }
 }
 
@@ -101,8 +127,10 @@ extension LoginViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == self.usernameTextField {
             self.usernameFloatingLabel.showHideWithAnimation(isShow: true)
+            textField.placeholder = ""
         } else if textField == self.passwordTextField {
             self.passwordFloatingLabel.showHideWithAnimation(isShow: true)
+            textField.placeholder = ""
         }
     }
 
@@ -112,13 +140,25 @@ extension LoginViewController: UITextFieldDelegate {
                 self.usernameFloatingLabel.showHideWithAnimation(isShow: true)
             } else {
                 self.usernameFloatingLabel.showHideWithAnimation(isShow: false)
+                self.usernameTextField.placeholder = Constants.Text.username
             }
         } else if textField == self.passwordTextField {
             if self.passwordTextField.text?.count ?? 0 > 0 {
                 self.passwordFloatingLabel.showHideWithAnimation(isShow: true)
             } else {
                 self.passwordFloatingLabel.showHideWithAnimation(isShow: false)
+                self.passwordTextField.placeholder = Constants.Text.password
             }
         }
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == self.usernameTextField {
+            self.usernameTextField.resignFirstResponder()
+        } else if textField == self.passwordTextField {
+            self.passwordTextField.resignFirstResponder()
+        }
+
+        return true
     }
 }

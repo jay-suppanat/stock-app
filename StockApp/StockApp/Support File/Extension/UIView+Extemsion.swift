@@ -25,15 +25,12 @@ extension UIView {
 
     public func showHideWithAnimation(isShow: Bool) {
         if isShow {
-            self.isHidden = false
-            UIView.animate(withDuration: 0.3) {
+            UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut]) {
                 self.alpha = 1
             }
         } else {
             UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut]) {
                 self.alpha = 0
-            } completion: { _ in
-                self.isHidden = true
             }
         }
     }

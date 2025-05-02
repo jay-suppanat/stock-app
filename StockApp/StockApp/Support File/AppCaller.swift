@@ -62,7 +62,10 @@ extension AppCaller: ControllerPresentation {
     public func openViewController(menu: OpenController) {
         switch menu {
         case .loginVC:
-            let vc = LoginViewController()
+            let vc = LoginViewController(viewModel: .init())
+            self.window.getTopViewController()?.navigationController?.pushViewController(vc, animated: true)
+        case .registerVC:
+            let vc = RegisterViewController()
             self.window.getTopViewController()?.navigationController?.pushViewController(vc, animated: true)
         }
     }

@@ -12,10 +12,12 @@ extension UITextField {
                                textColor: UIColor,
                                borderStyle: BorderStyle = .none,
                                cornerRadius: CornerRadius,
-                               contentType: UITextContentType = .username) {
+                               contentType: UITextContentType = .username,
+                               returnKeyType: UIReturnKeyType = .done) {
         self.textColor = textColor
         self.placeholder = placeholder
         self.borderStyle = borderStyle
         self.textContentType = contentType
+        self.returnKeyType = returnKeyType
     }
 }
