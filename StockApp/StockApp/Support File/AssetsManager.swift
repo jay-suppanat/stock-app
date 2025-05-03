@@ -7,10 +7,11 @@
 
 import UIKit
 
-enum AssetsManager: String {
+public enum AssetsManager: String {
     case profile_icon
     case search_icon
     case home_icon
+    case close_icon
 
     var image: UIImage {
         return UIImage(named: rawValue)!

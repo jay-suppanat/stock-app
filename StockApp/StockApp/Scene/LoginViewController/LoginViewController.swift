@@ -17,6 +17,8 @@ class LoginViewController: UIViewController {
     @IBOutlet var usernameFloatingLabel: UILabel!
     @IBOutlet var passwordFloatingLabel: UILabel!
     @IBOutlet var loginTitleLabel: UILabel!
+    @IBOutlet var closeImageView: UIImageView!
+    @IBOutlet var closeButton: UIButton!
 
     private var viewModel: LoginViewModel
 
@@ -85,6 +87,8 @@ extension LoginViewController: Themes {
                                              textColor: UIColor.tintColor,
                                              backgroundColor: UIColor.clear,
                                              cornerRadius: .none)
+        self.closeImageView.setupImageView(image: AssetsManager.close_icon, tintColor: UIColor.white)
+        self.closeButton.setupButtonTheme(backgroundColor: UIColor.clear)
     }
 }
 
@@ -93,10 +97,26 @@ extension LoginViewController: Themes {
 extension LoginViewController: UserInterface {
     private func setupUI() {
         self.initLoginButton()
+        self.initRegisterButton()
+        self.initCloseButton()
     }
 
     private func initLoginButton() {
-        self.loginButton.addTarget(self, action: #selector(self.touchLoginButton), for: .touchUpInside)
+        self.loginButton.addTarget(self,
+                                   action: #selector(self.touchLoginButton),
+                                   for: .touchUpInside)
+    }
+
+    private func initRegisterButton() {
+        self.registerButton.addTarget(self,
+                                      action: #selector(self.touchRegisterButton),
+                                      for: .touchUpInside)
+    }
+
+    private func initCloseButton() {
+        self.closeButton.addTarget(self,
+                                   action: #selector(self.touchCloseButton),
+                                   for: .touchUpInside)
     }
 }
 
@@ -105,6 +125,14 @@ extension LoginViewController: UserInterface {
 extension LoginViewController: Action {
     @objc private func touchLoginButton() {
         self.viewModel.requestLoginService(username: self.usernameTextField.text ?? "", password: self.passwordTextField.text ?? "")
+    }
+
+    @objc private func touchRegisterButton() {
+        AppCaller().openViewController(menu: .registerVC)
+    }
+
+    @objc private func touchCloseButton() {
+        self.dismiss(animated: true)
     }
 }
 

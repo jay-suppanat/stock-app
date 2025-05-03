@@ -63,9 +63,10 @@ extension AppCaller: ControllerPresentation {
         switch menu {
         case .loginVC:
             let vc = LoginViewController(viewModel: .init())
-            self.window.getTopViewController()?.navigationController?.pushViewController(vc, animated: true)
+            vc.modalPresentationStyle = .fullScreen
+            self.window.getTabBarViewController()?.present(vc, animated: true)
         case .registerVC:
-            let vc = RegisterViewController()
+            let vc = RegisterViewController(viewModel: .init())
             self.window.getTopViewController()?.navigationController?.pushViewController(vc, animated: true)
         }
     }
