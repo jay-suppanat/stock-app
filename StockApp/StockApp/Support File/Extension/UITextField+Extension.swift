@@ -9,11 +9,13 @@ import UIKit
 
 extension UITextField {
     public func setupTextField(placeholder: String = "",
+                               font: UIFont,
                                textColor: UIColor,
                                borderStyle: BorderStyle = .none,
                                cornerRadius: CornerRadius,
                                contentType: UITextContentType = .username,
                                returnKeyType: UIReturnKeyType = .done) {
+        self.font = font
         self.textColor = textColor
         self.placeholder = placeholder
         self.borderStyle = borderStyle

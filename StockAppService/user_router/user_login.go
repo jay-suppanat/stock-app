@@ -1,18 +1,21 @@
 package user_router
 
 import (
-	"github.com/gin-gonic/gin"
-	"stock-app-service/config"
-	"stock-app-service/support_file"
-	"net/http"
-	"fmt"
 	"crypto/rand"
 	"encoding/hex"
+	"fmt"
+	"net/http"
+	"stock-app-service/config"
+	"stock-app-service/support_file"
+
+	"github.com/gin-gonic/gin"
 )
 
 // MARK: UserLoginResponse
 
 type UserLoginResponse struct {
+	Status bool `json:"status"`
+	Message string `json:"message"`
 	TokenType string `json:"token_type"`
 	Token     string `json:"access_token"`
 	UserName  string `json:"username"`
@@ -51,12 +54,18 @@ func LoginStockApp(c *gin.Context) {
 	db, err := db_config.InitDB()
 
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{ support_file.Message: support_file.AuthorizationFail })
+		c.JSON(http.StatusInternalServerError, gin.H{ 
+			support_file.Status: false,
+			support_file.Message: support_file.AuthorizationFail,
+		 })
 		return
 	}
 
 	if err := c.ShouldBindJSON(&request); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{ support_file.Message: support_file.InvalidRequestBody })
+		c.JSON(http.StatusBadRequest, gin.H{ 
+			support_file.Status: false,
+			support_file.Message: support_file.InvalidRequestBody,
+		 })
 		return
 	}
 
@@ -65,12 +74,18 @@ func LoginStockApp(c *gin.Context) {
 	)
 
 	if err := row.Scan(&query.ID, &query.UserName, &query.Password, &query.FirstName, &query.LastName); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{ support_file.Message: support_file.AuthorizationFail })
+		c.JSON(http.StatusInternalServerError, gin.H{ 
+			support_file.Status: false,
+			support_file.Message: support_file.AuthorizationFail,
+		 })
 		return
 	}
 
 	if request.UserName != query.UserName || request.Password != query.Password {
-		c.JSON(http.StatusUnauthorized, gin.H{ support_file.Message: support_file.IncorrectUsernameAndPassword })
+		c.JSON(http.StatusUnauthorized, gin.H{ 
+			support_file.Status: false,
+			support_file.Message: support_file.IncorrectUsernameAndPassword,
+		 })
 		return
 	}
 
@@ -81,13 +96,18 @@ func LoginStockApp(c *gin.Context) {
 	result, err := db.Exec("UPDATE `user-info` SET `access_token` = ? WHERE `id` = ?", token, query.ID)
 	if err != nil {
 		fmt.Println(err)
-		c.JSON(http.StatusUnauthorized, gin.H{ support_file.Message: support_file.AuthorizationFail })
+		c.JSON(http.StatusUnauthorized, gin.H{ 
+			support_file.Status: false,
+			support_file.Message: support_file.AuthorizationFail,
+		})
 		return
 	}
 
 	fmt.Println(result)
 
 	response = UserLoginResponse{
+		Message: support_file.Success,
+		Status: true,
 		TokenType: "Bearer",
 		Token: token,
 		UserName: query.UserName,

@@ -21,6 +21,7 @@ class LoginViewController: UIViewController {
     @IBOutlet var closeButton: UIButton!
 
     private var viewModel: LoginViewModel
+    private let themeManager: ThemeManager = ThemeManager.shared
 
     required init(viewModel: LoginViewModel) {
         self.viewModel = viewModel
@@ -47,24 +48,26 @@ extension LoginViewController: LifeCycle {
 extension LoginViewController: Themes {
     private func applyThemes() {
         self.usernameTextField.setupTextField(placeholder: Constants.Text.username,
-                                              textColor: UIColor.white,
+                                              font: self.themeManager.fonts.setRegularFont(size: 15),
+                                              textColor: self.themeManager.colors.white,
                                               borderStyle: .none,
                                               cornerRadius: .none,
                                               contentType: .username)
         self.passwordTextField.setupTextField(placeholder: Constants.Text.password,
-                                              textColor: UIColor.white,
+                                              font: self.themeManager.fonts.setRegularFont(size: 15),
+                                              textColor: self.themeManager.colors.white,
                                               borderStyle: .none,
                                               cornerRadius: .none,
                                               contentType: .username)
         self.usernameTextField.delegate = self
         self.passwordTextField.delegate = self
         self.usernameFloatingLabel.setupLabel(text: Constants.Text.username,
-                                              textColor: UIColor.white,
-                                              font: UIFont.systemFont(ofSize: 15),
+                                              textColor: self.themeManager.colors.white,
+                                              font: self.themeManager.fonts.setRegularFont(size: 15),
                                               cornerRadius: .none)
         self.passwordFloatingLabel.setupLabel(text: Constants.Text.password,
-                                              textColor: UIColor.white,
-                                              font: UIFont.systemFont(ofSize: 15),
+                                              textColor: self.themeManager.colors.white,
+                                              font: self.themeManager.fonts.setRegularFont(size: 15),
                                               cornerRadius: .none)
         self.lineView.forEach { view in
             view.setupLineView()
@@ -72,20 +75,22 @@ extension LoginViewController: Themes {
         self.usernameFloatingLabel.alpha = 0
         self.passwordFloatingLabel.alpha = 0
         self.loginButton.setupButtonTheme(text: Constants.Text.signIn,
-                                          textColor: UIColor.tintColor,
-                                          backgroundColor: UIColor.white,
+                                          textColor: self.themeManager.colors.tintColor,
+                                          font: self.themeManager.fonts.setRegularFont(size: 15),
+                                          backgroundColor: self.themeManager.colors.white,
                                           cornerRadius: .roundHalf)
         self.loginTitleLabel.setupLabel(text: Constants.Text.signIn,
-                                        textColor: UIColor.white,
-                                        font: UIFont.systemFont(ofSize: 85),
+                                        textColor: self.themeManager.colors.white,
+                                        font: self.themeManager.fonts.setSemiBoldFont(size: 75),
                                         cornerRadius: .none)
         self.registerDescLabel.setupLabel(text: Constants.Text.registerDesc,
-                                          textColor: UIColor.white,
-                                          font: UIFont.systemFont(ofSize: 15),
+                                          textColor: self.themeManager.colors.white,
+                                          font: self.themeManager.fonts.setRegularFont(size: 15),
                                           cornerRadius: .none)
         self.registerButton.setupButtonTheme(text: Constants.Text.signUp,
-                                             textColor: UIColor.tintColor,
-                                             backgroundColor: UIColor.clear,
+                                             textColor: self.themeManager.colors.tintColor,
+                                             font: self.themeManager.fonts.setRegularFont(size: 15),
+                                             backgroundColor: self.themeManager.colors.clear,
                                              cornerRadius: .none)
         self.closeImageView.setupImageView(image: AssetsManager.close_icon, tintColor: UIColor.white)
         self.closeButton.setupButtonTheme(backgroundColor: UIColor.clear)
@@ -96,6 +101,7 @@ extension LoginViewController: Themes {
 
 extension LoginViewController: UserInterface {
     private func setupUI() {
+        self.navigationController?.navigationBar.isHidden = true
         self.initLoginButton()
         self.initRegisterButton()
         self.initCloseButton()
@@ -142,8 +148,12 @@ extension LoginViewController: Service {
     private func bindViewModel() {
         self.viewModel.loginResponseEvent
                     .receive(on: DispatchQueue.main)
-                    .sink { [weak self] _ in
-
+                    .sink { [weak self] result in
+                        if result.status {
+                            self?.dismiss(animated: true)
+                        } else {
+                            AppCaller().showAlertMessage(message: result.message)
+                        }
                     }
                     .store(in: &self.viewModel.cancellables)
     }

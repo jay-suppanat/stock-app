@@ -30,6 +30,7 @@ const (
 	DeleteUserFail = "Delete user fail"
 	NotMatchToken = "Not match token"
 	InternalError = "Internal error"
+	Success = "success"
 )
 
 // MARK: - Value

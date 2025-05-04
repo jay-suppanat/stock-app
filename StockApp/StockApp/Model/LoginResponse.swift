@@ -10,10 +10,14 @@ import Foundation
 // MARK: - LoginResponse
 
 struct LoginResponse: Codable {
+    let status: Bool
+    let message: String
     let tokenType, accessToken, username: String
     let userInfo: UserInfo
 
     init() {
+        self.status = false
+        self.message = ""
         self.tokenType = ""
         self.accessToken = ""
         self.username = ""
@@ -21,6 +25,7 @@ struct LoginResponse: Codable {
     }
 
     enum CodingKeys: String, CodingKey {
+        case status, message
         case tokenType = "token_type"
         case accessToken = "access_token"
         case username

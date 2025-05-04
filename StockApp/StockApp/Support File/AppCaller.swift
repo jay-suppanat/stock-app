@@ -44,6 +44,17 @@ extension AppCaller: AlertPresentation {
                                                          message: message,
                                                          preferredStyle: .actionSheet)
     }
+
+    // MARK: - External
+
+    public func showAlertMessage(message: String) {
+        let okButton = UIAlertAction(title: Constants.Button.ok,
+                                     style: .default)
+
+        self.alertPresenter(title: Constants.Alert.authorizationFail,
+                            message: message,
+                            actions: [okButton])
+    }
 }
 
 // MARK: ControllerPresentation
@@ -62,7 +73,7 @@ extension AppCaller: ControllerPresentation {
     public func openViewController(menu: OpenController) {
         switch menu {
         case .loginVC:
-            let vc = LoginViewController(viewModel: .init())
+            let vc = UINavigationController(rootViewController: LoginViewController(viewModel: .init()))
             vc.modalPresentationStyle = .fullScreen
             self.window.getTabBarViewController()?.present(vc, animated: true)
         case .registerVC:

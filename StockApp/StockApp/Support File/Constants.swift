@@ -13,4 +13,12 @@ enum Constants {
         static let signUp = "Sign Up"
         static let registerDesc = "Join us now."
     }
+
+    enum Button {
+        static let ok = "OK"
+    }
+
+    enum Alert {
+        static let authorizationFail = "Authorization Fail"
+    }
 }
